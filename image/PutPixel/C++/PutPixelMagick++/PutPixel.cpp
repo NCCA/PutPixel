@@ -1,3 +1,5 @@
+// clang++ -std=c++14 `Magick++-config --cflags --libs` PutPixel.cpp -o PutPixel
+
 #include <Magick++.h>
 #include <string.h> // for memset
 #include <iostream>
