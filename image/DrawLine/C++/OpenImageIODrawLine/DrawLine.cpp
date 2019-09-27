@@ -1,42 +1,33 @@
-// clang++ -std=c++14 PutPixel.cpp -lOpenImageIO -lOpenImageIO_Util -o PutPixel
+// clang++ -std=c++14 DrawLine.cpp -lOpenImageIO -lOpenImageIO_Util -o DrawLine
 #include <memory>
 #include <string>
 #include <OpenImageIO/imageio.h>
+#include <OpenImageIO/imagebuf.h>
+#include <OpenImageIO/imagebufalgo.h>
+
 
 
 int main( int argc, char* argv[] )
 {
   constexpr unsigned int           WIDTH     = 100;
   constexpr unsigned int           HEIGHT    = 100;
-  constexpr auto                   imageSize = WIDTH * HEIGHT * 3 * sizeof(unsigned char);
-  // c++ 14 we are going to use a smart pointer to create a buffer for our pixel data
-  // this will clear up once finished this is a contiguous block of memort.
-  auto image=std::make_unique<unsigned char []>(imageSize);
-  // set all the pixels to 255 to make the image white. Note that is you need coloured background you will
-  // need to set each pixel not use memset!
-  memset(image.get(),255,imageSize);
-  // set pixel as lambda this function gets the x,y offset into the buffer and sets the pixel values
-  auto setPixel = [&image](size_t _x, size_t _y, unsigned char _r, unsigned char _g, unsigned char _b)
-  {
-    size_t index           = (_y * WIDTH * 3) + _x * 3;
-    image.get()[index]     = _r;
-    image.get()[index + 1] = _g;
-    image.get()[index + 2] = _b;
-  };
-
-  // set top left pixel (0,0)to Red 
-  setPixel(0,0,255,0,0);
-  // set next pixel (1,0)to Green 
-  setPixel(1,0,0,255,0);
-  // set next pixel (2,0)to Blue 
-  setPixel(2,0,0,0,255);
-
   using namespace OIIO;
 
   const int channels = 3; // RGB
-  auto out = ImageOutput::create("PutPixel.png");
   ImageSpec spec (WIDTH, HEIGHT, channels, TypeDesc::UINT8);
-  out->open ("PutPixel.png", spec);
-  out->write_image (TypeDesc::UINT8, &image[0]);
-  out->close ();
+  auto buf=ImageBuf(spec);
+  // note the algorithms use float values for parameters, here we create an array of 1,1,1 
+  ImageBufAlgo::fill(buf,{1.0f,1.0f,1.0f});
+//  This uses the same dimensions and co-ordinates as the image
+//  first draw from top left to bottom right using red
+
+  ImageBufAlgo::render_line(buf, 0, 0, WIDTH, HEIGHT, {1.0f,0.0f,0.0f});
+  // now the other diagonal in green
+  ImageBufAlgo::render_line(buf, WIDTH, 0, 0, HEIGHT, {0.0f,1.0f,0.0f});
+  // horizontal  in blue
+  ImageBufAlgo::render_line(buf, 0,HEIGHT/2,WIDTH,HEIGHT/2, {0.0f,0.0f,1.0f});
+  // vertical in  black
+  ImageBufAlgo::render_line(buf, WIDTH/2,0,WIDTH/2,HEIGHT, {0.0f,0.0f,0.0f});
+
+  buf.write("DrawLine.png");
 }

@@ -5,6 +5,7 @@ project(${PROJECT_NAME})
 # use C++ 14
 set(CMAKE_CXX_STANDARD 14)
 set(SOURCES PutPixel.cpp  )
+link_directories(/usr/local/lib64) # default OIIO install dir
 
 # add exe and link libs that must be after the other defines
 add_executable(${PROJECT_NAME} ${SOURCES})

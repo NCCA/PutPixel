@@ -22,8 +22,4 @@ oiio.ImageBufAlgo.render_line(buf, width, 0, 0, height, (0,255,0))
 oiio.ImageBufAlgo.render_line(buf, 0,height/2,width,height/2, (0,0,255))
 # vertical in  black
 oiio.ImageBufAlgo.render_line(buf, width/2,0,width/2,height, (255,0,0))
-
-
-
-
-
+buf.write('DrawLine.png')

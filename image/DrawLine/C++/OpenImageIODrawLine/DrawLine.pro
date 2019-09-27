@@ -1,5 +1,5 @@
 
-TARGET = PutPixel 
+TARGET = DrawLine 
 CONFIG -= app_bundle
 DEPENDPATH += .
 INCLUDEPATH += .
@@ -7,4 +7,4 @@ INCLUDEPATH += .
 LIBS+=-lOpenImageIO -lOpenImageIO_Util
 CONFIG+=c++14
 # Input
-SOURCES += PutPixel.cpp
+SOURCES += DrawLine.cpp
