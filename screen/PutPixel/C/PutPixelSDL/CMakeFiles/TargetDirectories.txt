@@ -1,0 +1,3 @@
+/home/jmacey/teaching/Code/PutPixel/screen/C/PutPixelSDL/CMakeFiles/rebuild_cache.dir
+/home/jmacey/teaching/Code/PutPixel/screen/C/PutPixelSDL/CMakeFiles/edit_cache.dir
+/home/jmacey/teaching/Code/PutPixel/screen/C/PutPixelSDL/CMakeFiles/PutPixel.dir
