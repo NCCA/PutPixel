@@ -1,1 +1,0 @@
-/opt/rh/devtoolset-7/root/usr/bin/cc   -rdynamic CMakeFiles/PutPixel.dir/PutPixel.c.o  -o PutPixel -L/usr/lib64  -lSDL2 -lSDL2_image 
